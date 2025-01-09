@@ -44,7 +44,7 @@ const signin = () => {
                         <Text style={{ textAlign: "right", fontSize: 15 }}>Don't have an account yet? <Text style={{ color: "blue" }} onPress={() => router.push("/Screens/signup")}>signup</Text></Text>
                     </View>
                     <View style={{ marginTop: 25 }}>
-                        <Pressable style={{ backgroundColor: "#0286F2", padding: 20, borderRadius: 15 }}>
+                        <Pressable style={{ backgroundColor: "#0286F2", padding: 20, borderRadius: 15 }} onPress={() => router.push("/Drawer/home")}>
                             <Text style={{ color: "white", textAlign: "center" }}>Sign in</Text>
                         </Pressable>
                     </View>
