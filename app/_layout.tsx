@@ -31,12 +31,16 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === 'dark' ? DefaultTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="Screens" options={{ headerShown: false }} />
-        <Stack.Screen name="Drawer" options={{ headerShown: false }} />
-        <Stack.Screen name="Drawer/inbox" options={{ headerShown: false }} />
-        <Stack.Screen name="Screens/welcome" options={{ headerShown: false }} />
-        <Stack.Screen name="Screens/signin" options={{ headerShown: false }} />
-        <Stack.Screen name="Screens/signup" options={{ headerShown: false }} />
+        <Stack.Screen name="no-session" options={{ headerShown: false }} />
+        <Stack.Screen name="session" options={{ headerShown: false }} />
+        <Stack.Screen name="session/home" options={{ headerShown: false }} />
+        <Stack.Screen name="session/inbox" options={{ headerShown: false }} />
+        <Stack.Screen name="session/singleChatSession" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="Drawer" options={{ headerShown: false }} />
+        <Stack.Screen name="Drawer/inbox" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="no-session/welcome" options={{ headerShown: false }} />
+        <Stack.Screen name="no-session/signin" options={{ headerShown: false }} />
+        <Stack.Screen name="no-session/signup" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );

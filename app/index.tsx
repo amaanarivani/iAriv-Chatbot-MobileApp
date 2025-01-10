@@ -6,7 +6,7 @@ const index = () => {
   const router = useRouter();
 
   useFocusEffect(() => {
-    router.push("/Screens/welcome")
+    router.push("/no-session/welcome")
   })
 
   return (

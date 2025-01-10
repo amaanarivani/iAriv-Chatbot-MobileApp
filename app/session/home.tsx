@@ -1,13 +1,14 @@
-import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
-import { usePathname } from 'expo-router'
+import { usePathname, useRouter } from 'expo-router'
 import ChatCard from '@/components/ChatCard'
 
 const home = () => {
     const [chatOpen, setChatOpen] = useState(true);
     // const [chatData, setChatData] = useState([]);
     const pathName = usePathname();
+    const router = useRouter();
 
     const chatData = [
         {
@@ -84,7 +85,17 @@ const home = () => {
         },
     ];
 
-    const renderItem = ({ item }: { item: any }) => <ChatCard data={item} />;
+    const handlePress = (item: any) => {
+        console.log('Item pressed:', item);
+        router.navigate({ pathname: "/session/singleChatSession", params: { item: item?.session_id } })
+        // Perform your action here (e.g., navigation, state update)
+    };
+
+    const renderItem = ({ item }: { item: any }) => (
+        <TouchableOpacity onPress={() => handlePress(item)}>
+            <ChatCard data={item} />
+        </TouchableOpacity>
+    );
 
     return (
         <>

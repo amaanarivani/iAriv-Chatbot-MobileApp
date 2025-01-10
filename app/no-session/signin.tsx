@@ -41,10 +41,10 @@ const signin = () => {
                         />
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={{ textAlign: "right", fontSize: 15 }}>Don't have an account yet? <Text style={{ color: "blue" }} onPress={() => router.push("/Screens/signup")}>signup</Text></Text>
+                        <Text style={{ textAlign: "right", fontSize: 15 }}>Don't have an account yet? <Text style={{ color: "blue" }} onPress={() => router.push("/no-session/signup")}>signup</Text></Text>
                     </View>
                     <View style={{ marginTop: 25 }}>
-                        <Pressable style={{ backgroundColor: "#0286F2", padding: 20, borderRadius: 15 }} onPress={() => router.push("/Drawer/home")}>
+                        <Pressable style={{ backgroundColor: "#0286F2", padding: 20, borderRadius: 15 }} onPress={() => router.push("/session/home")}>
                             <Text style={{ color: "white", textAlign: "center" }}>Sign in</Text>
                         </Pressable>
                     </View>
