@@ -6,11 +6,16 @@ const ChatCard = ({ data }: { data: any }) => {
     return (
         <View style={{ backgroundColor: "white", padding: 10, width: "99%", borderBottomWidth: 1, borderBottomColor: "#D9D9D9" }}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                <View>
-                    <Text style={{ fontSize: 15 }}>{data?.session_id}</Text>
-                    <View style={{ flexDirection: "row" }}>
-                        <Text style={{ fontSize: 12 }}>{data?.messages}</Text>
-                        <Text style={{ fontSize: 12, marginStart: 5 }}>{data?.time}</Text>
+                <View style={{ flexDirection: "row" }}>
+                    <View>
+                        <AntDesign name="user" size={24} color="black" />
+                    </View>
+                    <View style={{marginStart: 2}}>
+                        <Text style={{ fontSize: 15 }}>{data?.session_id}</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={{ fontSize: 12 }}>{data?.messages}</Text>
+                            <Text style={{ fontSize: 12, marginStart: 5 }}>{data?.time}</Text>
+                        </View>
                     </View>
                 </View>
                 <View>
@@ -20,7 +25,7 @@ const ChatCard = ({ data }: { data: any }) => {
                 </View>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 10 }}>
-                <View style={{flexDirection: "row"}}>
+                <View style={{ flexDirection: "row" }}>
                     <AntDesign name="earth" size={18} color="black" />
                     <Text style={{ fontSize: 13, fontWeight: "600", marginStart: 5 }}>{data?.website}</Text>
                 </View>
