@@ -70,10 +70,10 @@ const signup = () => {
                         />
                     </View>
                     <View style={{ marginTop: 10 }}>
-                        <Text style={{ textAlign: "right", fontSize: 15 }}>Already have an account? <Text style={{ color: "blue" }} onPress={() => router.push("/no-session/signin")}>signin</Text></Text>
+                        <Text style={{ textAlign: "right", fontSize: 15 }}>Already have an account? <Text style={{ color: "blue" }} onPress={() => router.push("/(no-session)/signin")}>signin</Text></Text>
                     </View>
                     <View style={{ marginTop: 25 }}>
-                        <Pressable style={{ backgroundColor: "#0286F2", padding: 20, borderRadius: 15 }}>
+                        <Pressable style={{ backgroundColor: "#6969D7", padding: 20, borderRadius: 15 }}>
                             <Text style={{ color: "white", textAlign: "center" }}>Sign up</Text>
                         </Pressable>
                     </View>

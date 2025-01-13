@@ -3,12 +3,16 @@ import React, { useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
 import { usePathname, useRouter } from 'expo-router'
 import ChatCard from '@/components/ChatCard'
+import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
 
 const home = () => {
     const [chatOpen, setChatOpen] = useState(true);
     // const [chatData, setChatData] = useState([]);
     const pathName = usePathname();
     const router = useRouter();
+
+    // console.log(pathName, "home pathname");
+    
 
     const chatData = [
         {
@@ -87,7 +91,7 @@ const home = () => {
 
     const handlePress = (item: any) => {
         console.log('Item pressed:', item);
-        router.navigate({ pathname: "/session/singleChatSession", params: { item: item?.session_id } })
+        router.navigate({ pathname: "/(session)/singleChatSession", params: { item: item?.session_id } })
         // Perform your action here (e.g., navigation, state update)
     };
 
@@ -99,15 +103,30 @@ const home = () => {
 
     return (
         <>
+            <View style={{ backgroundColor: "#6969D7", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
+                <Pressable onPress={() => router.back()}>
+                    <Ionicons name="arrow-back-sharp" size={24} color="white" />
+                </Pressable>
+                <View>
+                    <View style={{ flexDirection: "row", marginStart: 10 }}>
+                        {/* <AntDesign name="user" size={24} color="white" style={{ marginVertical: "auto" }} /> */}
+                        <Text style={{ color: "white", fontSize: 20, marginStart: 5, marginVertical: "auto" }}>Dashboard</Text>
+                    </View>
+                    {/* <Text style={{ color: "white", fontSize: 15, marginStart: 5, textAlign: "center" }}>www.iariv.com</Text> */}
+                </View>
+                <View>
+                    <Feather name="more-vertical" size={24} color="white" />
+                </View>
+            </View>
             <View style={{ flexDirection: "row", backgroundColor: "white" }}>
-                <View style={{ width: "50%", borderBottomColor: chatOpen ? "#0286F2" : "", borderBottomWidth: chatOpen ? 1.5 : 0, padding: 15, }}>
+                <View style={{ width: "50%", borderBottomColor: chatOpen ? "#6969D7" : "", borderBottomWidth: chatOpen ? 1.5 : 0, padding: 15, }}>
                     <Pressable style={{ width: "100%" }} onPress={() => setChatOpen(true)}>
-                        <Text style={{ textAlign: "center", fontSize: 15, color: chatOpen ? "#0286F2" : "black", fontWeight: chatOpen ? "600" : "400" }}>Chats</Text>
+                        <Text style={{ textAlign: "center", fontSize: 15, color: chatOpen ? "#6969D7" : "black", fontWeight: chatOpen ? "600" : "400" }}>Chats</Text>
                     </Pressable>
                 </View>
-                <View style={{ width: "50%", borderBottomColor: chatOpen ? "" : "#0286F2", borderBottomWidth: chatOpen ? 0 : 1, padding: 15, }}>
+                <View style={{ width: "50%", borderBottomColor: chatOpen ? "" : "#6969D7", borderBottomWidth: chatOpen ? 0 : 1, padding: 15, }}>
                     <Pressable style={{ width: "100%" }} onPress={() => setChatOpen(false)}>
-                        <Text style={{ textAlign: "center", fontSize: 15, color: chatOpen ? "black" : "#0286F2", fontWeight: chatOpen ? "400" : "600" }}>Tickets</Text>
+                        <Text style={{ textAlign: "center", fontSize: 15, color: chatOpen ? "black" : "#6969D7", fontWeight: chatOpen ? "400" : "600" }}>Tickets</Text>
                     </Pressable>
                 </View>
             </View>
@@ -125,9 +144,9 @@ const home = () => {
                             data={chatData}
                             renderItem={renderItem}
                             keyExtractor={item => item._id.toString()}
-                            contentContainerStyle={{}}
+                            // contentContainerStyle={{ marginBottom: 100}}
                             horizontal={false}
-                            style={{ marginBottom: 185 }}
+                            style={{ marginBottom: 258 }}
                             showsVerticalScrollIndicator={false}
                             keyboardShouldPersistTaps={"handled"}
                             // onRefresh={handleRefresh}

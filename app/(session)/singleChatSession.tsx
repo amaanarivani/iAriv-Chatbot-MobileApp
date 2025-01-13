@@ -19,7 +19,7 @@ const singleChatSession = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ backgroundColor: "#4F4F4F", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ backgroundColor: "#6969D7", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
         <Pressable onPress={() => router.back()}>
           <Ionicons name="arrow-back-sharp" size={24} color="white" />
         </Pressable>
@@ -63,7 +63,7 @@ const singleChatSession = () => {
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <View style={{ flexDirection: "row", marginTop: 30 }}>
               <View style={{}}>
-                <View style={{ backgroundColor: "#0286F2", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
+                <View style={{ backgroundColor: "#6969D7", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
                   <Text style={{ fontSize: 20, color: "white" }}>Hey</Text>
                 </View>
               </View>
@@ -78,7 +78,7 @@ const singleChatSession = () => {
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <View style={{ flexDirection: "row", }}>
               <View style={{}}>
-                <View style={{ backgroundColor: "#0286F2", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
+                <View style={{ backgroundColor: "#6969D7", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
                   <Text style={{ fontSize: 20, color: "white" }}>What do you want</Text>
                 </View>
               </View>
@@ -110,7 +110,7 @@ const singleChatSession = () => {
       <View style={{ flexDirection: "row", width: "100%" }}>
         {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
         <TextInput style={styles.input} placeholder='Type your message' />
-        <Pressable style={{ width: "20%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#0286F2", borderRadius: 5 }}>
+        <Pressable style={{ width: "20%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#6969D7", borderRadius: 5 }}>
           <Feather name="send" size={24} color="white" />
           {/* <Text style={{color: "white"}}>Send</Text> */}
         </Pressable>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: "100%",
-    marginTop: 20
+    // marginTop: 20
   },
   input: {
     width: "80%",
