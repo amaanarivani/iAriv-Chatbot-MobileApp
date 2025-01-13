@@ -10,7 +10,7 @@ const ChatCard = ({ data }: { data: any }) => {
                     <View>
                         <AntDesign name="user" size={24} color="black" />
                     </View>
-                    <View style={{marginStart: 2}}>
+                    <View style={{ marginStart: 2 }}>
                         <Text style={{ fontSize: 15 }}>{data?.session_id}</Text>
                         <View style={{ flexDirection: "row" }}>
                             <Text style={{ fontSize: 12 }}>{data?.messages}</Text>
@@ -19,7 +19,7 @@ const ChatCard = ({ data }: { data: any }) => {
                     </View>
                 </View>
                 <View>
-                    <Pressable style={{ backgroundColor: data?.status == "connect" ? "#0286F2" : "gray", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
+                    <Pressable style={{ backgroundColor: data?.status == "connect" ? "#6969D7" : "gray", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 5 }}>
                         <Text style={{ fontSize: 15, color: "white" }}>{data?.status}</Text>
                     </Pressable>
                 </View>
