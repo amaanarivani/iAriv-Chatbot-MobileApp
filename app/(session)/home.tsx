@@ -4,6 +4,7 @@ import TabNavigation from '@/components/TabNavigation'
 import { usePathname, useRouter } from 'expo-router'
 import ChatCard from '@/components/ChatCard'
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
+import Header from '@/components/Header'
 
 const home = () => {
     const [chatOpen, setChatOpen] = useState(true);
@@ -103,21 +104,7 @@ const home = () => {
 
     return (
         <>
-            <View style={{ backgroundColor: "#6969D7", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
-                <Pressable onPress={() => router.back()}>
-                    <Ionicons name="arrow-back-sharp" size={24} color="white" />
-                </Pressable>
-                <View>
-                    <View style={{ flexDirection: "row", marginStart: 10 }}>
-                        {/* <AntDesign name="user" size={24} color="white" style={{ marginVertical: "auto" }} /> */}
-                        <Text style={{ color: "white", fontSize: 20, marginStart: 5, marginVertical: "auto" }}>Dashboard</Text>
-                    </View>
-                    {/* <Text style={{ color: "white", fontSize: 15, marginStart: 5, textAlign: "center" }}>www.iariv.com</Text> */}
-                </View>
-                <View>
-                    <Feather name="more-vertical" size={24} color="white" />
-                </View>
-            </View>
+            <Header title="Dashboard"/>
             <View style={{ flexDirection: "row", backgroundColor: "white" }}>
                 <View style={{ width: "50%", borderBottomColor: chatOpen ? "#6969D7" : "", borderBottomWidth: chatOpen ? 1.5 : 0, padding: 15, }}>
                     <Pressable style={{ width: "100%" }} onPress={() => setChatOpen(true)}>

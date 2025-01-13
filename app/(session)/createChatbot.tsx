@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import TabNavigation from '@/components/TabNavigation';
 import { usePathname, useRouter } from 'expo-router';
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
+import Header from '@/components/Header';
 
 const createChatbot = () => {
   const [beginAutomated, setBeginAutomated] = useState(false);
@@ -15,21 +16,7 @@ const createChatbot = () => {
   return (
     <>
       <View style={styles.container}>
-        <View style={{ backgroundColor: "#6969D7", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
-          <Pressable onPress={() => router.back()}>
-            <Ionicons name="arrow-back-sharp" size={24} color="white" />
-          </Pressable>
-          <View>
-            <View style={{ flexDirection: "row", marginStart: 10 }}>
-              {/* <AntDesign name="user" size={24} color="white" style={{ marginVertical: "auto" }} /> */}
-              <Text style={{ color: "white", fontSize: 20, marginStart: 5, marginVertical: "auto" }}>Create Chatbot</Text>
-            </View>
-            {/* <Text style={{ color: "white", fontSize: 15, marginStart: 5, textAlign: "center" }}>www.iariv.com</Text> */}
-          </View>
-          <View>
-            <Feather name="more-vertical" size={24} color="white" />
-          </View>
-        </View>
+        <Header title="Create Chatbot" />
         <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1, height: "auto", marginTop: 10 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <View style={{ backgroundColor: "white", width: "90%", padding: 15, borderRadius: 10 }}>
