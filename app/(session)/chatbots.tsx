@@ -26,10 +26,16 @@ const chatbots = () => {
         }
     ];
 
+    const handlePress = (item: any) => {
+        console.log('Item pressed:', item);
+        router.navigate({ pathname: "/(session)/editChatbot", params: { item: item?.title } })
+        // Perform your action here (e.g., navigation, state update)
+    };
+
     const renderItem = ({ item }: { item: any }) => (
-        // <TouchableOpacity onPress={() => handlePress(item)}>
-        <Chatbot data={item} />
-        // </TouchableOpacity>
+        <TouchableOpacity onPress={() => handlePress(item)}>
+            <Chatbot data={item} />
+        </TouchableOpacity>
     );
 
     const router = useRouter();
@@ -37,8 +43,8 @@ const chatbots = () => {
     return (
         <>
             <View style={styles.container}>
-                <Header title="Chatbots"/>
-                <View>
+                <Header title="Chatbots" />
+                <View style={{backgroundColor: "#E8E8E8"}}>
                     <FlatList
                         data={chatbotData}
                         renderItem={renderItem}

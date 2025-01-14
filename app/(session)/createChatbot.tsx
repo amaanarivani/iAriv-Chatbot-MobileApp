@@ -17,9 +17,9 @@ const createChatbot = () => {
     <>
       <View style={styles.container}>
         <Header title="Create Chatbot" />
-        <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1, height: "auto", marginTop: 10 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
+        <ScrollView style={{ marginBottom: 60, backgroundColor: "#E8E8E8" }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
           <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <View style={{ backgroundColor: "white", width: "90%", padding: 15, borderRadius: 10 }}>
+            <View style={{ backgroundColor: "white", width: "90%", padding: 15, borderRadius: 10, marginBottom: 30, marginTop: 20}}>
               <View style={{ width: "100%", marginTop: 10 }}>
                 <Text style={{ fontSize: 15, marginStart: 4, fontWeight: "500" }}>Domain</Text>
                 <TextInput
