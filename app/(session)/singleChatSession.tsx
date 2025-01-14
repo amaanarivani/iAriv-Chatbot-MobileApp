@@ -2,6 +2,7 @@ import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, Touchable
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
+import Header from '@/components/Header';
 
 const singleChatSession = () => {
   const [sessionId, setSessionId] = useState("");
@@ -19,21 +20,7 @@ const singleChatSession = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ backgroundColor: "#6969D7", padding: 20, flexDirection: "row", justifyContent: "space-between" }}>
-        <Pressable onPress={() => router.back()}>
-          <Ionicons name="arrow-back-sharp" size={24} color="white" />
-        </Pressable>
-        <View>
-          <View style={{ flexDirection: "row", marginStart: 10 }}>
-            <AntDesign name="user" size={24} color="white" style={{ marginVertical: "auto" }} />
-            <Text style={{ color: "white", fontSize: 20, marginStart: 5, marginVertical: "auto" }}>{sessionId}</Text>
-          </View>
-          <Text style={{ color: "white", fontSize: 15, marginStart: 5, textAlign: "center" }}>www.iariv.com</Text>
-        </View>
-        <View>
-          <Feather name="more-vertical" size={24} color="white" />
-        </View>
-      </View>
+      <Header title={sessionId}/>
       <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
         <View style={{}}>
           <View>
