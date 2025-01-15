@@ -24,7 +24,7 @@ const Welcome = () => {
           <View style={{ paddingHorizontal: 10, marginTop: 20 }}>
             <Text style={{ color: "", fontSize: 30, fontWeight: "800", textAlign: "center" }}>Welcome to iAriv Chatbot, Great Friend to Chat</Text>
             <Pressable style={{ backgroundColor: "#6969D7", padding: 20, marginTop: 25, borderRadius: 15 }} onPress={() => router.push("/(no-session)/signin")}>
-              <Text style={{ color: "white", textAlign: "center", fontSize: 20, fontWeight: "500" }}>Get Started</Text>
+              <Text style={{ color: "white", textAlign: "center", fontSize: 18, fontWeight: "500" }}>Get Started</Text>
             </Pressable>
           </View>
         </View>

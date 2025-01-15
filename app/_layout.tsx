@@ -40,6 +40,8 @@ export default function RootLayout() {
         <Stack.Screen name="(session)/chatbots" options={{ headerShown: false }} />
         <Stack.Screen name="(session)/editChatbot" options={{ headerShown: false }} />
         <Stack.Screen name="(session)/userAccount" options={{ headerShown: false }} />
+        <Stack.Screen name="(session)/userProfile" options={{ headerShown: false }} />
+        <Stack.Screen name="(session)/changePassword" options={{ headerShown: false }} />
         {/* <Stack.Screen name="Drawer" options={{ headerShown: false }} />
         <Stack.Screen name="Drawer/inbox" options={{ headerShown: false }} /> */}
         <Stack.Screen name="(no-session)/welcome" options={{ headerShown: false }} />

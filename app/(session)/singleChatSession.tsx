@@ -1,4 +1,4 @@
-import { Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
+import { Keyboard, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
@@ -19,9 +19,11 @@ const singleChatSession = () => {
 
 
   return (
-    <View style={styles.container}>
+    // <View style={styles.container}>
+    <SafeAreaView style={{ height: "100%", backgroundColor: "#6969D7" }}>
       <Header title={sessionId} />
-      <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
+      <View style={{ width: "90%", backgroundColor: "#D1D1F0", padding: 6, marginHorizontal: "auto", marginTop: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}></View>
+      <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1, borderTopLeftRadius: 20, borderTopRightRadius: 20 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
         <View style={{}}>
           <View>
             <Text style={{ textAlign: "center", marginTop: 10, fontSize: 15, fontWeight: "500" }}>08-Jan-2025</Text>
@@ -103,7 +105,8 @@ const singleChatSession = () => {
         </Pressable>
         {/* </TouchableWithoutFeedback> */}
       </View>
-    </View>
+    </SafeAreaView>
+    // </View>
   )
 }
 

@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import TabNavigation from '@/components/TabNavigation';
 import { usePathname, useRouter } from 'expo-router';
@@ -42,9 +42,10 @@ const chatbots = () => {
     const pathname = usePathname();
     return (
         <>
-            <View style={styles.container}>
+            <SafeAreaView style={{ height: "100%", backgroundColor: "#6969D7" }}>
                 <Header title="Chatbots" />
-                <View style={{backgroundColor: "#E8E8E8"}}>
+                <View style={{ width: "90%", backgroundColor: "#D1D1F0", padding: 6, marginHorizontal: "auto", marginTop: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}></View>
+                <View style={{ flexDirection: "row", backgroundColor: "white", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
                     <FlatList
                         data={chatbotData}
                         renderItem={renderItem}
@@ -66,7 +67,7 @@ const chatbots = () => {
                     />
                 </View>
                 {/* <Chatbot data={chatbotData} /> */}
-            </View>
+            </SafeAreaView>
             <TabNavigation pathname={pathname} />
         </>
     )
