@@ -13,8 +13,9 @@ const TabNavigation = ({ pathname }: { pathname: string }) => {
         <View style={{ borderTopColor: "#8f8f8f44", borderTopWidth: 0.5, position: "absolute", zIndex: 700, bottom: 0, height: 60, width: "100%", flexDirection: "row", justifyContent: "space-around", alignContent: "center", alignItems: "center", backgroundColor: '#ffff' }}>
             <Pressable onPress={() => { router.push("/(session)/home") }} style={{ width: "30%" }}>
                 <View style={styles.tabItemV}>
-                    <Entypo name='home' color={pathname == "/home" ? "#6969D7" : "#8f8f8f"} size={30} />
-                    <Text style={{ color: `${pathname == "/home" ? "#6969D7" : "#8f8f8f"}`, fontSize: 12, marginTop: 4 }} >Home</Text>
+                    {/* <Entypo name='home' color={pathname == "/home" ? "#6969D7" : "#8f8f8f"} size={30} /> */}
+                    <FontAwesome5 name="inbox" color={pathname == "/home" ? "#6969D7" : "#8f8f8f"} size={30} />
+                    <Text style={{ color: `${pathname == "/home" ? "#6969D7" : "#8f8f8f"}`, fontSize: 12, marginTop: 4 }} >Dashboard</Text>
                 </View>
             </Pressable>
             <Pressable onPress={() => { router.push("/(session)/createChatbot") }} style={{ width: "30%" }}>
