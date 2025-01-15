@@ -28,7 +28,7 @@ const editChatbot = () => {
     return (
         <>
             <Header title="Edit Chatbot" />
-            <ScrollView style={{backgroundColor: "#E8E8E8"}} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
+            <ScrollView style={{ backgroundColor: "#E8E8E8" }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
                 <View style={{ backgroundColor: "#6969D7", padding: 20, marginTop: 20, width: "90%", marginHorizontal: "auto", borderRadius: 15 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", width: "98%" }}>
                         <View>
@@ -47,7 +47,7 @@ const editChatbot = () => {
                             style={styles.input}
                             placeholder="www.google.com"
                             placeholderTextColor="#767676"
-                            value='www.google.com'
+                        // value='www.google.com'
                         // onChangeText={(e) => {
                         //     setName(e)
                         // }}

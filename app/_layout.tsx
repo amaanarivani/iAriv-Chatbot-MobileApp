@@ -44,7 +44,10 @@ export default function RootLayout() {
         <Stack.Screen name="Drawer/inbox" options={{ headerShown: false }} /> */}
         <Stack.Screen name="(no-session)/welcome" options={{ headerShown: false }} />
         <Stack.Screen name="(no-session)/signin" options={{ headerShown: false }} />
+        <Stack.Screen name="(no-session)/login" options={{ headerShown: false }} />
         <Stack.Screen name="(no-session)/signup" options={{ headerShown: false }} />
+        <Stack.Screen name="(no-session)/register" options={{ headerShown: false }} />
+        <Stack.Screen name="(no-session)/forgotPassword" options={{ headerShown: false }} />
       </Stack>
     </ThemeProvider>
   );
