@@ -69,8 +69,8 @@ const signin = () => {
                     <View style={{ width: "30%" }}><Text style={{ color: "gray", fontWeight: "500", textAlign: "center" }}>or signin with</Text></View>
                     <View style={{ borderBottomWidth: 0.2, borderColor: "gray", marginVertical: "auto", width: "30%" }}></View>
                 </View>
-                <View style={{ marginTop: 30, flexDirection: "row", justifyContent: "space-evenly" }}>
-                    <Pressable style={{ borderWidth: 0.5, borderColor: "gray", paddingVertical: 15, paddingHorizontal: 25, flexDirection: "row", borderRadius: 10, alignItems: "center" }}>
+                <View style={{ marginTop: 30, flexDirection: "row", justifyContent: "space-evenly"}}>
+                    <Pressable style={{ borderWidth: 0.5, borderColor: "gray", paddingVertical: 15, paddingHorizontal: 25, flexDirection: "row", borderRadius: 10, alignItems: "center", }}>
                         <Image
                             source={require("@/assets/images/google-icon.png")}
                             style={{ width: 20, height: 20 }}

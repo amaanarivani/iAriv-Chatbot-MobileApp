@@ -20,7 +20,7 @@ const singleChatSession = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={sessionId}/>
+      <Header title={sessionId} />
       <ScrollView style={{ backgroundColor: "#E8E8E8", flex: 1 }} automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'}>
         <View style={{}}>
           <View>
@@ -36,22 +36,22 @@ const singleChatSession = () => {
               </View>
               <View style={{}}>
                 <View style={{ backgroundColor: "white", padding: 15, marginVertical: "auto", marginStart: 10, borderRadius: 15 }}>
-                  <Text style={{ fontSize: 20 }}>Hello</Text>
+                  <Text style={{ fontSize: 17 }}>Hello</Text>
                 </View>
               </View>
             </View>
             <View style={{ marginStart: 50, marginTop: 10 }}>
-              <Text style={{ fontSize: 20, color: "gray" }}>{sessionId} - 1:11 pm</Text>
+              <Text style={{ fontSize: 13, color: "gray" }}>{sessionId} - 1:11 pm</Text>
             </View>
           </View>
           <View style={{ marginTop: 50 }}>
-            <Text style={{ fontSize: 20, textAlign: "center" }}>Amaan Alam (Me) <Text style={{ color: "gray" }}>has joined the conversation</Text></Text>
+            <Text style={{ fontSize: 15, textAlign: "center" }}>Amaan Alam (Me) <Text style={{ color: "gray" }}>has joined the conversation</Text></Text>
           </View>
           <View style={{ flex: 1, alignItems: "flex-end" }}>
             <View style={{ flexDirection: "row", marginTop: 30 }}>
               <View style={{}}>
                 <View style={{ backgroundColor: "#6969D7", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
-                  <Text style={{ fontSize: 20, color: "white" }}>Hey</Text>
+                  <Text style={{ fontSize: 17, color: "white" }}>Hey</Text>
                 </View>
               </View>
               <View style={{ marginStart: 10 }}>
@@ -59,14 +59,14 @@ const singleChatSession = () => {
               </View>
             </View>
             <View style={{ marginTop: 10, marginEnd: 10 }}>
-              <Text style={{ fontSize: 20, color: "gray" }}>Amaan Alam (Me) - 1:13 pm</Text>
+              <Text style={{ fontSize: 13, color: "gray" }}>Amaan Alam (Me) - 1:13 pm</Text>
             </View>
           </View>
-          <View style={{ flex: 1, alignItems: "flex-end" }}>
+          <View style={{ flex: 1, alignItems: "flex-end", marginTop: 20 }}>
             <View style={{ flexDirection: "row", }}>
               <View style={{}}>
                 <View style={{ backgroundColor: "#6969D7", padding: 15, marginVertical: "auto", borderRadius: 15 }}>
-                  <Text style={{ fontSize: 20, color: "white" }}>What do you want</Text>
+                  <Text style={{ fontSize: 17, color: "white" }}>What do you want</Text>
                 </View>
               </View>
               <View style={{ marginStart: 10 }}>
@@ -74,7 +74,7 @@ const singleChatSession = () => {
               </View>
             </View>
             <View style={{ marginTop: 10, marginEnd: 10 }}>
-              <Text style={{ fontSize: 20, color: "gray" }}>Amaan Alam (Me) - 1:13 pm</Text>
+              <Text style={{ fontSize: 13, color: "gray" }}>Amaan Alam (Me) - 1:13 pm</Text>
             </View>
           </View>
           <View>
@@ -84,21 +84,21 @@ const singleChatSession = () => {
               </View>
               <View style={{}}>
                 <View style={{ backgroundColor: "white", padding: 15, marginVertical: "auto", marginStart: 10, borderRadius: 15 }}>
-                  <Text style={{ fontSize: 20 }}>Just checking</Text>
+                  <Text style={{ fontSize: 17 }}>Just checking</Text>
                 </View>
               </View>
             </View>
             <View style={{ marginStart: 50, marginTop: 10 }}>
-              <Text style={{ fontSize: 20, color: "gray" }}>{sessionId} - 1:13 pm</Text>
+              <Text style={{ fontSize: 13, color: "gray" }}>{sessionId} - 1:13 pm</Text>
             </View>
           </View>
         </View>
       </ScrollView>
-      <View style={{ flexDirection: "row", width: "100%" }}>
+      <View style={{ flexDirection: "row", width: "100%", backgroundColor: "#E8E8E8", paddingBottom: 10 }}>
         {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
         <TextInput style={styles.input} placeholder='Type your message' />
-        <Pressable style={{ width: "20%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#6969D7", borderRadius: 5 }}>
-          <Feather name="send" size={24} color="white" />
+        <Pressable style={{ width: "20%", flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#6969D7", borderRadius: 30, marginHorizontal: "3%" }}>
+          <Feather name="send" size={22} color="white" />
           {/* <Text style={{color: "white"}}>Send</Text> */}
         </Pressable>
         {/* </TouchableWithoutFeedback> */}
@@ -116,13 +116,14 @@ const styles = StyleSheet.create({
     // marginTop: 20
   },
   input: {
-    width: "80%",
-    borderRadius: 10,
-    padding: 15,
+    width: "70%",
+    borderRadius: 30,
+    padding: 20,
     borderColor: "#D9D9D9",
     borderWidth: 1,
     backgroundColor: "white",
-    marginBottom: 1,
+    // marginBottom: 10,
+    marginStart: "5%"
     // marginStart: 20
   },
 });

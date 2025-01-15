@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
 import { usePathname, useRouter } from 'expo-router'
 import ChatCard from '@/components/ChatCard'
-import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Feather, FontAwesome6, Ionicons } from '@expo/vector-icons'
 import Header from '@/components/Header'
 
 const home = () => {
@@ -13,7 +13,7 @@ const home = () => {
     const router = useRouter();
 
     // console.log(pathName, "home pathname");
-    
+
 
     const chatData = [
         {
@@ -104,7 +104,7 @@ const home = () => {
 
     return (
         <>
-            <Header title="Dashboard"/>
+            <Header title="Dashboard" />
             <View style={{ flexDirection: "row", backgroundColor: "white" }}>
                 <View style={{ width: "50%", borderBottomColor: chatOpen ? "#6969D7" : "", borderBottomWidth: chatOpen ? 1.5 : 0, padding: 15, }}>
                     <Pressable style={{ width: "100%" }} onPress={() => setChatOpen(true)}>
@@ -133,7 +133,7 @@ const home = () => {
                             keyExtractor={item => item._id.toString()}
                             // contentContainerStyle={{ marginBottom: 100}}
                             horizontal={false}
-                            style={{ marginBottom: 258 }}
+                            style={{ marginBottom: 268 }}
                             showsVerticalScrollIndicator={false}
                             keyboardShouldPersistTaps={"handled"}
                             // onRefresh={handleRefresh}
@@ -157,6 +157,9 @@ const home = () => {
                             <View style={{}}>
                                 <Text style={{ color: "black", textAlign: "center", fontSize: 25, fontWeight: "600" }}>No Tickets</Text>
                                 <Text style={{ color: "black", textAlign: "center", fontSize: 15, marginTop: 10 }}>There are currently no tickets from your selected property</Text>
+                            </View>
+                            <View style={{position: "absolute", right: 0, bottom: "25%", backgroundColor: "#6969D7", padding: 15, borderRadius: "100%", elevation: 5}}>
+                                <FontAwesome6 name="add" size={28} color="white" />
                             </View>
                         </View>
                     </>
