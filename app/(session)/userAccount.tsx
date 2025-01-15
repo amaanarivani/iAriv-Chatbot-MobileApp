@@ -11,7 +11,7 @@ const userAccount = () => {
     return (
         <>
             <Header title="Profile" />
-            <ScrollView style={{ backgroundColor: "#D9D9D9", height: "100%", }}>
+            <ScrollView style={{ backgroundColor: "#E8E8E8", height: "100%", }}>
                 {/* User */}
                 <View style={{ backgroundColor: "white", padding: 20, marginTop: 20, width: "90%", marginHorizontal: "auto", borderRadius: 10, flexDirection: "row" }}>
                     <View>
