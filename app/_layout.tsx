@@ -37,7 +37,6 @@ export default function RootLayout() {
           <Stack.Screen name="(no-session)" options={{ headerShown: false }} />
           <Stack.Screen name="(session)" options={{ headerShown: false }} />
           <Stack.Screen name="(session)/home" options={{ headerShown: false }} />
-          <Stack.Screen name="(session)/inbox" options={{ headerShown: false }} />
           <Stack.Screen name="(session)/singleChatSession" options={{ headerShown: false }} />
           <Stack.Screen name="(session)/createChatbot" options={{ headerShown: false }} />
           <Stack.Screen name="(session)/chatbots" options={{ headerShown: false }} />
@@ -47,7 +46,8 @@ export default function RootLayout() {
           <Stack.Screen name="(session)/changePassword" options={{ headerShown: false }} />
           {/* <Stack.Screen name="Drawer" options={{ headerShown: false }} />
         <Stack.Screen name="Drawer/inbox" options={{ headerShown: false }} /> */}
-        <Stack.Screen name="(no-session)/verifyEmailCode" options={{ headerShown: false }} />
+          <Stack.Screen name="(no-session)/resetPassword" options={{ headerShown: false }} />
+          <Stack.Screen name="(no-session)/verifyEmailCode" options={{ headerShown: false }} />
           <Stack.Screen name="(no-session)/welcome" options={{ headerShown: false }} />
           <Stack.Screen name="(no-session)/signin" options={{ headerShown: false }} />
           <Stack.Screen name="(no-session)/signup" options={{ headerShown: false }} />
