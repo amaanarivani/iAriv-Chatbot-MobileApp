@@ -179,7 +179,10 @@ const signup = () => {
         request_origin: "app",
       });
       setMessage(res.data.message);
-      setVerifyEmail(true);
+      setTimeout(() => {
+        router.navigate({ pathname: "/(no-session)/verifyEmailCode", params: { item: email } })
+      }, 2000);
+      // setVerifyEmail(true);
       // showModal();
       setName("");
       // setEmail("");
@@ -349,7 +352,7 @@ const signup = () => {
       </Provider>
 
       {/* Email otp Verification modal */}
-      <Portal>
+      {/* <Portal>
         <Modal visible={verifyEmail}
           contentContainerStyle={containerStyle}
         >
@@ -394,7 +397,7 @@ const signup = () => {
             </Pressable>
           </View>
         </Modal>
-      </Portal >
+      </Portal > */}
     </>
   )
 }

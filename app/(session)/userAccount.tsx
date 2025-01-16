@@ -1,11 +1,15 @@
 import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '@/components/Header';
 import TabNavigation from '@/components/TabNavigation';
 import { usePathname, useRouter } from 'expo-router';
 import { AntDesign, Entypo, Feather, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { Context } from '@/contextApi/AuthContext';
+import { contextType } from '@/contextApi/CreateDataContext';
 
 const userAccount = () => {
+
+    const { boundActions: { signOut, updateUserActivity }, state } = useContext<contextType>(Context);
 
     const pathname = usePathname();
     const router = useRouter();
@@ -24,8 +28,8 @@ const userAccount = () => {
                             />
                             {/* <FontAwesome6 name="user-large" size={50} color="black" /> */}
                             <View style={{ marginStart: 15 }}>
-                                <Text style={{ fontSize: 20, fontWeight: "500", marginBottom: 5 }}>John Brown</Text>
-                                <Text>name@example.com</Text>
+                                <Text style={{ fontSize: 20, fontWeight: "500", marginBottom: 5 }}>{state?.userData?.name}</Text>
+                                <Text>{state?.userData?.email}</Text>
                             </View>
                         </View>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
@@ -124,19 +128,19 @@ const userAccount = () => {
                     </View>
                     {/* logout and delete account */}
                     <View style={{ backgroundColor: "#F5F5F5", padding: 20, marginTop: 15, width: "90%", marginHorizontal: "auto", borderRadius: 10, borderWidth: 0.5, borderColor: "gray" }}>
-                        <View style={{ flexDirection: "row" }}>
+                        <Pressable style={{ flexDirection: "row" }}>
                             <View style={{}}>
                                 <MaterialIcons name="logout" size={24} color="black" />
                             </View>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
-                                <View style={{ marginStart: 20, marginVertical: "auto" }}>
+                            <Pressable style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }} onPress={() => { signOut({ router }) }}>
+                                <Pressable style={{ marginStart: 20, marginVertical: "auto" }}>
                                     <Text style={{ fontSize: 15, fontWeight: "500" }}>Logout</Text>
-                                </View>
+                                </Pressable>
                                 <View style={{ marginEnd: 10 }}>
                                     <AntDesign name="right" size={20} color="black" />
                                 </View>
-                            </View>
-                        </View>
+                            </Pressable>
+                        </Pressable>
                         <View style={{ flexDirection: "row", marginTop: 15 }}>
                             <View style={{}}>
                                 <AntDesign name="delete" size={24} color="red" />
