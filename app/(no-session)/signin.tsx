@@ -65,8 +65,12 @@ const signin = () => {
             setTimeout(() => {
                 router.navigate({ pathname: "/(no-session)/verifyEmailCode", params: { item: email } })
             }, 2000);
-        } catch (error) {
-
+        } catch (error: any) {
+            if(error?.response?.data?.message){
+                setError(error?.response?.data?.message)
+            }else{
+                setError("Something went wrong")
+            }
         }
     }
 
