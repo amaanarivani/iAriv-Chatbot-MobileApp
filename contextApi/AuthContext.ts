@@ -1,6 +1,7 @@
 "use client"
 // import { AuthRoutes } from "@/route_config/config";
 import createDataContext from "./CreateDataContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -11,6 +12,7 @@ import axios from "axios";
 import { io, Socket } from "socket.io-client";
 // import { userData } from "three/examples/jsm/nodes/Nodes.js";
 import { DateTime } from "luxon";
+import { instance } from "@/api/baseUrlConfig";
 // import { enqueueSnackbar } from "notistack";
 
 export type notificationType = {
@@ -984,169 +986,244 @@ const onBackgroundMeet: actionFunctionType = (dispatch) => {
 //   }
 // }
 
+// app signin function
 const signIn: actionFunctionType = (dispatch) => {
-  return async ({ email, password, navigation, setLoading, setError, error, success, setSuccess, setNeedEmailVerification, setSignUpEmail, setEmail, setPassword, setDisable, setVisibleSnackErr, mode, setMode = null, backHand, setRequireEmailVerification, router, updateUserActivity, pathName, setSocket }) => {
+  return async ({
+    email,
+    password,
+    router,
+    setLoading,
+    setError,
+    setMessage,
+    pathName,
+    updateUserActivity,
+    setIsEmailVerified
+  }) => {
     try {
-      setLoading(true)
-      // creating post request for login
-      let response
-      // if (mode == 100) {
+      setLoading(true);
+      let response;
+      response = await instance.post("/api/signin", {
+        email,
+        password,
+        request_origin: "app",
+      });
+      setMessage(response?.data?.message);
+      // setVisibleSnackErr(true);
+      // setTimeout(() => {
+      //   hideModal();
+      //   hideLoginModal();
+      // }, 1000);
+      const data = response?.data?.userData;
+      const token = response?.data?.token;
+      await AsyncStorage.setItem("token", token.toString());
+      await AsyncStorage.setItem("user_id", data?._id.toString());
+      await AsyncStorage.setItem("user_email", data?.email.toString());
+      // await AsyncStorage.setItem("isSignInApp", data?.isSignIn_App.toString());
+      await AsyncStorage.setItem("user_name", data?.name.toString());
+      await AsyncStorage.setItem("user_type", data?.user_type_id.toString());
+      await AsyncStorage.setItem(
+        "is_email_verified",
+        data?.email_verified.toString()
+      );
+      console.log(data?.email_verified, "email verified check");
 
-      response = await axios.post(process.env.apiUrl + "/api/signin", { email, password }, { withCredentials: false, });
-      console.log("inside auth context ", response.data);
-      let data = response?.data
+      dispatch({ type: "USER_DATA", payload: response?.data?.userData });
+      // let socket: any | null = io(`${instanceScoket}`, {
+      //   path: "/api/socketconnect",
+      // });
+      // dispatch({ type: "SOCKET", payload: socket });
 
+      await AsyncStorage.setItem("status", data?.status.toString());
+      setLoading(false);
+      router.push("/(session)/home");
 
-      try {
-        let subRes = await axios.post(process.env.apiUrl + "/api/single-user-subscription", { id: data.userData._id })
-        let subData = subRes.data.usersubscriptiondoc
-        dispatch({ type: "SET_USER_SUBSCRIPTION_DATA", payload: subData })
-
-      } catch (error: any) {
-        console.log(error)
-        // enqueueSnackbar(error?.response?.data?.message, {
-        //   anchorOrigin: {
-        //     horizontal: 'right',
-        //     vertical: 'bottom'
-        //   },
-        //   variant: 'success'
-        // })
-      }
-      // console.log("data rajaheeeeeeeeeee", data?.userData?._id);
-      setLoading(false)
-      try {
-        // updateUserActivity({ user_id: data?.userData?._id, action: data?.message, actionUrl: pathName })      
-      }
-      catch (error: any) {
-        // enqueueSnackbar(error?.response?.data?.message, {
-        //   anchorOrigin: {
-        //     horizontal: 'right',
-        //     vertical: 'bottom'
-        //   },
-        //   variant: 'success'
-        // })
-      }
-
-      try {
-        window.localStorage.setItem("token", response.data.token)
-      } catch (error: any) {
-        console.log(error);
-        // enqueueSnackbar(error?.response?.data?.message, {
-        //   anchorOrigin: {
-        //     horizontal: 'right',
-        //     vertical: 'bottom'
-        //   },
-        //   variant: 'success'
-        // })
-      }
-
-      dispatch({ type: "UPDATE_TOKEN", payload: { token: response.data?.token } });
-      dispatch({ type: "USER_DATA", payload: response.data.userData });
-      const returnUrl = localStorage.getItem('returnUrl');
-      localStorage.removeItem('returnUrl');
-      if (returnUrl) {
-        router.push(returnUrl)
-      }
-      else {
-        setSuccess(response?.data?.message);
-        router.push("/dashboard")
-      }
-      // } else {
-      // response = await instance.post("/users/signin", { email, mode, request_origin: "app" });
-
-      // }
-      // const data = response.data.result;
-      // const token = response.data.token
-
-
-      // await AsyncStorage.setItem("token", token);
-
-      // await AsyncStorage.setItem("user_id", data._id);
-      // await AsyncStorage.setItem("isLoggedIn", "true");
-      // await AsyncStorage.setItem("user_email", data.email);
-      // await AsyncStorage.setItem("user_firstname", data.first_name);
-      // await AsyncStorage.setItem("user_lastname", data.last_name);
-      // await AsyncStorage.setItem("next_billing_time", "null")
-      // await AsyncStorage.setItem("schedule_subscription", "false");
-
-      // await AsyncStorage.setItem("isSubscribed", "null")
-      // await AsyncStorage.setItem("isTrial", "null")
-      // console.log(response.data.userData,"---in auth");
-
-
-
-
-
-
-
-
-      // if (backHand) {
-      //   backHand.removeEventListener("hardwareBackPress")
-      // }
-      // setLoading(false)
-      // if (data.user_type_id && data.address) {
-
-      //   navigation.navigate("HomeScreen");
-      // } else {
-      //   navigation.navigate("ProfileStack")
-      // }
-
-      // if (mode == 100) {
-
-      //   setEmail("")
-      //   setPassword("")
-      //   setTimeout(() => { setDisable(false) }, 3000)
-      // } else {
-      //   setSignUpEmail("")
-      // }
-
-      // if(setMode){
-      //   setMode(100)
-      // }
-
+      setLoading(false);
+      setMessage("");
+      // setVisibleSnackErr(false);
+      updateUserActivity({
+        user_id: data._id,
+        action: `${response?.data?.message}, with email: ${data.email}`,
+        actionUrl: pathName,
+      });
     } catch (err: any) {
-      // if (mode == 98) {
-      // LoginManager.logOut()
-      // }
-
-      // console.log(err);
-
-
-      // if (mode == 99) {
-      // GoogleSignin.signOut()
-      // }
-
-      setLoading(false)
-      // setDisable(false)
-      // setError(err.response.data.message)
-      // setVisibleSnackErr(true)
-
-      if (err?.response?.data?.message) {
-        setError(err.response.data.message)
-
-
-        // setRequireEmailVerification(true)
-      }
+      console.log(err + "");
+      let errMsg = err?.response?.data?.message
+        ? err?.response?.data?.message
+        : err + "";
+      console.log(errMsg, "email verified check");
       if (err?.response?.data?.needVerification) {
-        setNeedEmailVerification(true)
-
-
-        // setRequireEmailVerification(true)
+        setIsEmailVerified(false);
       }
-      try {
-        if (err?.response?.data?.userData?._id) {
-          // updateUserActivity({ user_id: err?.response?.data?.userData?._id, action: err.response.data.message, actionUrl: pathName })
-        }
-        else {
-          // updateUserActivity({ user_id: "", action: err?.response?.data?.message, actionUrl: pathName })
-
-        }
-      } catch (error) {
-        // console.log(error)
-      }
+      setError(errMsg);
+      setLoading(false);
+      // setVisibleSnackErr(true);
     }
   };
 };
+
+// const signIn: actionFunctionType = (dispatch) => {
+//   return async ({ email, password, navigation, setLoading, setError, error, success, setSuccess, setNeedEmailVerification, setSignUpEmail, setEmail, setPassword, setDisable, setVisibleSnackErr, mode, setMode = null, backHand, setRequireEmailVerification, router, updateUserActivity, pathName, setSocket }) => {
+//     try {
+//       setLoading(true)
+//       // creating post request for login
+//       let response
+//       // if (mode == 100) {
+
+//       response = await axios.post(process.env.apiUrl + "/api/signin", { email, password }, { withCredentials: false, });
+//       console.log("inside auth context ", response.data);
+//       let data = response?.data
+
+
+//       try {
+//         let subRes = await axios.post(process.env.apiUrl + "/api/single-user-subscription", { id: data.userData._id })
+//         let subData = subRes.data.usersubscriptiondoc
+//         dispatch({ type: "SET_USER_SUBSCRIPTION_DATA", payload: subData })
+
+//       } catch (error: any) {
+//         console.log(error)
+//         // enqueueSnackbar(error?.response?.data?.message, {
+//         //   anchorOrigin: {
+//         //     horizontal: 'right',
+//         //     vertical: 'bottom'
+//         //   },
+//         //   variant: 'success'
+//         // })
+//       }
+//       // console.log("data rajaheeeeeeeeeee", data?.userData?._id);
+//       setLoading(false)
+//       try {
+//         // updateUserActivity({ user_id: data?.userData?._id, action: data?.message, actionUrl: pathName })      
+//       }
+//       catch (error: any) {
+//         // enqueueSnackbar(error?.response?.data?.message, {
+//         //   anchorOrigin: {
+//         //     horizontal: 'right',
+//         //     vertical: 'bottom'
+//         //   },
+//         //   variant: 'success'
+//         // })
+//       }
+
+//       try {
+//         window.localStorage.setItem("token", response.data.token)
+//       } catch (error: any) {
+//         console.log(error);
+//         // enqueueSnackbar(error?.response?.data?.message, {
+//         //   anchorOrigin: {
+//         //     horizontal: 'right',
+//         //     vertical: 'bottom'
+//         //   },
+//         //   variant: 'success'
+//         // })
+//       }
+
+//       dispatch({ type: "UPDATE_TOKEN", payload: { token: response.data?.token } });
+//       dispatch({ type: "USER_DATA", payload: response.data.userData });
+//       const returnUrl = localStorage.getItem('returnUrl');
+//       localStorage.removeItem('returnUrl');
+//       if (returnUrl) {
+//         router.push(returnUrl)
+//       }
+//       else {
+//         setSuccess(response?.data?.message);
+//         router.push("/dashboard")
+//       }
+//       // } else {
+//       // response = await instance.post("/users/signin", { email, mode, request_origin: "app" });
+
+//       // }
+//       // const data = response.data.result;
+//       // const token = response.data.token
+
+
+//       // await AsyncStorage.setItem("token", token);
+
+//       // await AsyncStorage.setItem("user_id", data._id);
+//       // await AsyncStorage.setItem("isLoggedIn", "true");
+//       // await AsyncStorage.setItem("user_email", data.email);
+//       // await AsyncStorage.setItem("user_firstname", data.first_name);
+//       // await AsyncStorage.setItem("user_lastname", data.last_name);
+//       // await AsyncStorage.setItem("next_billing_time", "null")
+//       // await AsyncStorage.setItem("schedule_subscription", "false");
+
+//       // await AsyncStorage.setItem("isSubscribed", "null")
+//       // await AsyncStorage.setItem("isTrial", "null")
+//       // console.log(response.data.userData,"---in auth");
+
+
+
+
+
+
+
+
+//       // if (backHand) {
+//       //   backHand.removeEventListener("hardwareBackPress")
+//       // }
+//       // setLoading(false)
+//       // if (data.user_type_id && data.address) {
+
+//       //   navigation.navigate("HomeScreen");
+//       // } else {
+//       //   navigation.navigate("ProfileStack")
+//       // }
+
+//       // if (mode == 100) {
+
+//       //   setEmail("")
+//       //   setPassword("")
+//       //   setTimeout(() => { setDisable(false) }, 3000)
+//       // } else {
+//       //   setSignUpEmail("")
+//       // }
+
+//       // if(setMode){
+//       //   setMode(100)
+//       // }
+
+//     } catch (err: any) {
+//       // if (mode == 98) {
+//       // LoginManager.logOut()
+//       // }
+
+//       // console.log(err);
+
+
+//       // if (mode == 99) {
+//       // GoogleSignin.signOut()
+//       // }
+
+//       setLoading(false)
+//       // setDisable(false)
+//       // setError(err.response.data.message)
+//       // setVisibleSnackErr(true)
+
+//       if (err?.response?.data?.message) {
+//         setError(err.response.data.message)
+
+
+//         // setRequireEmailVerification(true)
+//       }
+//       if (err?.response?.data?.needVerification) {
+//         setNeedEmailVerification(true)
+
+
+//         // setRequireEmailVerification(true)
+//       }
+//       try {
+//         if (err?.response?.data?.userData?._id) {
+//           // updateUserActivity({ user_id: err?.response?.data?.userData?._id, action: err.response.data.message, actionUrl: pathName })
+//         }
+//         else {
+//           // updateUserActivity({ user_id: "", action: err?.response?.data?.message, actionUrl: pathName })
+
+//         }
+//       } catch (error) {
+//         // console.log(error)
+//       }
+//     }
+//   };
+// };
 const signInWithGoogle: actionFunctionType = (dispatch) => {
   return async ({ email, password, credential, navigation, setLoading, setError, setNeedEmailVerification, setSignUpEmail, setEmail, setPassword, setDisable, setVisibleSnackErr, mode, setMode = null, backHand, setRequireEmailVerification, router, updateUserActivity, pathName, setSocket }) => {
     try {
@@ -1448,108 +1525,209 @@ const fetchUpdatedProfileData: actionFunctionType = (dispatch) => {
   };
 };
 
+// app signout
 const signOut: actionFunctionType = (dispatch) => {
-  return async ({ navigation, user_id, socket, mode, router, signup_method, updateUserActivity, pathName, setError, setSuccess }) => {
-
+  return async ({
+    navigation,
+    user_id,
+    socket,
+    mode,
+    router,
+    signup_method,
+    updateUserActivity,
+    pathName,
+  }) => {
     try {
+      const token = await AsyncStorage.getItem("token");
 
-
-      const BG_TASK = "BACKGROUND-NOTIFICATION-TASK"
-      // await AsyncStorage.setItem("isLoggedIn", "false");
-      // const token = await AsyncStorage.getItem("token");
-
-      let token = window.localStorage.getItem("token")
-      let res = await axios.post(process.env.apiUrl + "/api/signout", {}, { withCredentials: false, headers: { Authorization: `Bearer ${token}` } })
-      console.log(res, "response")
-
-      window.localStorage.setItem("token", "")
-      try {
-        // updateUserActivity({ user_id: res?.data?.userData?._id, action: "Signout successful", actionUrl: "/Signout" })
-        // setSuccess(res.data.message);
-      } catch (error: any) {
-        console.log(error, "")
-        // enqueueSnackbar(error?.response?.data?.message, {
-        //   anchorOrigin: {
-        //     horizontal: 'right',
-        //     vertical: 'bottom'
-        //   },
-        //   variant: 'success'
-        // })
+      if (token) {
+        let res = await instance.post(
+          "/api/signout",
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        // console.log(res.data.userData, "aaaaa");
+      } else {
+        console.log("no token");
       }
-      dispatch({ type: "UPDATE_TOKEN", payload: { token: "" } })
-      dispatch({ type: "SIGN_OUT", payload: {} })
+      // socket.disconnect()
 
-      // if (signup_method == 58) {
-      //   googleLogout()
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user_id");
+      await AsyncStorage.removeItem("user_email");
+      await AsyncStorage.removeItem("isSignIn");
+      await AsyncStorage.removeItem("isSignInApp");
+      // await AsyncStorage.setItem("isSignIn", "false");
+
+      await AsyncStorage.removeItem("status");
+      await AsyncStorage.removeItem("user_name");
+      await AsyncStorage.removeItem("signup_method");
+      await AsyncStorage.removeItem("user_type_id");
+      await AsyncStorage.removeItem("applyBtnClk");
+      await AsyncStorage.removeItem("waitlistJoinBtnClk");
+      await AsyncStorage.removeItem("proceedToBookNow");
+      // await AsyncStorage.setItem(
+      //   "signup_method",
+      //   data.signup_method.toString()
+      // );
+      dispatch({ type: "SIGN_OUT", payload: {} });
+
+      // if (mode == 58) {
+      // isko kholna hai
+      // GoogleSignin.signOut()
+      // }
+      // if (mode == 59) {
+      //   isko kholna hai
+      //  LoginManager.logOut()
       // }
 
-      if (signup_method == 59) {
-        // window.fbAsyncInit()
-        // window.FB.logout((res:any)=>{
-        //   console.log("facebook logout success");
-
-        // })
-      }
-
-
-
-      // setSuccess(res.data.message);
-      // enqueueSnackbar(res?.data?.message, {
-      //   anchorOrigin: {
-      //     horizontal: 'right',
-      //     vertical: 'bottom'
-      //   },
-      //   variant: 'success'
+      dispatch({ type: "CLEAR_SOCKET", payload: {} });
+      // if (signup_method == 59) {
+      // window.fbAsyncInit()
+      // window.FB.logout((res:any)=>{
+      // console.log("facebook logout success");
       // })
-      router.push("/")
+      // }
 
-
-
-
-      // await AsyncStorage.setItem("user_id", "");
-      // await AsyncStorage.removeItem("user_email");
-      // await AsyncStorage.removeItem("user_firstname");
-      // await AsyncStorage.removeItem("user_lastname");
-      // await AsyncStorage.removeItem("user_mappin");
-      // await AsyncStorage.setItem("token","");
-      // await AsyncStorage.removeItem("user_photo");
-      // await AsyncStorage.removeItem("user_type_id");
-      // await AsyncStorage.setItem("isSubscribed", "null")
-      // await AsyncStorage.setItem("isTrial", "null")
-      // await AsyncStorage.setItem("next_billing_time", "null")
-
-
+      // try {
+      //   updateUserActivity({
+      //     user_id: res?.data?.userData?._id,
+      //     action: "Signout successful",
+      //     actionUrl: "/Signout",
+      //   });
+      // } catch (error) {
+      //   console.log(error, "");
+      // }
+      ///////////////////////////////////
+      //  let isSigninGoogle =  GoogleSignin.getCurrentUser();
+      //  if (isSigninGoogle) {
+      //    await GoogleSignin.signOut();
+      //  }
+      ///////////////////////////////////////////
+      router.push("/(no-session)/signin");
 
       try {
-
-
-      } catch (error: any) {
-        // enqueueSnackbar(error?.response?.data?.message, {
-        //   anchorOrigin: {
-        //     horizontal: 'right',
-        //     vertical: 'bottom'
-        //   },
-        //   variant: 'success'
-        // })
-      }
+      } catch (error) { }
       // await AsyncStorage.setItem("schedule_subscription", "false")
-
 
       // await instance.post("/users/signout", { user_id })
 
       // dispatch({ type: "SIGN_OUT" });
       // navigation.navigate("Login");
     } catch (error: any) {
-      // enqueueSnackbar(error?.response?.data?.message, {
-      //   anchorOrigin: {
-      //     horizontal: 'right',
-      //     vertical: 'bottom'
-      //   },
-      //   variant: 'success'
-      // })
+      if (error?.response?.data?.message) {
+        console.log(error?.response?.data?.message, "zzzzzzzzz");
+
+        // setError(error.response.data.message);
+        // setRequireEmailVerification(true)
+      }
+      console.log(error);
     }
   };
 };
+
+// const signOut: actionFunctionType = (dispatch) => {
+//   return async ({ navigation, user_id, socket, mode, router, signup_method, updateUserActivity, pathName, setError, setSuccess }) => {
+
+//     try {
+
+
+//       const BG_TASK = "BACKGROUND-NOTIFICATION-TASK"
+//       // await AsyncStorage.setItem("isLoggedIn", "false");
+//       // const token = await AsyncStorage.getItem("token");
+
+//       let token = window.localStorage.getItem("token")
+//       let res = await axios.post(process.env.apiUrl + "/api/signout", {}, { withCredentials: false, headers: { Authorization: `Bearer ${token}` } })
+//       console.log(res, "response")
+
+//       window.localStorage.setItem("token", "")
+//       try {
+//         // updateUserActivity({ user_id: res?.data?.userData?._id, action: "Signout successful", actionUrl: "/Signout" })
+//         // setSuccess(res.data.message);
+//       } catch (error: any) {
+//         console.log(error, "")
+//         // enqueueSnackbar(error?.response?.data?.message, {
+//         //   anchorOrigin: {
+//         //     horizontal: 'right',
+//         //     vertical: 'bottom'
+//         //   },
+//         //   variant: 'success'
+//         // })
+//       }
+//       dispatch({ type: "UPDATE_TOKEN", payload: { token: "" } })
+//       dispatch({ type: "SIGN_OUT", payload: {} })
+
+//       // if (signup_method == 58) {
+//       //   googleLogout()
+//       // }
+
+//       if (signup_method == 59) {
+//         // window.fbAsyncInit()
+//         // window.FB.logout((res:any)=>{
+//         //   console.log("facebook logout success");
+
+//         // })
+//       }
+
+
+
+//       // setSuccess(res.data.message);
+//       // enqueueSnackbar(res?.data?.message, {
+//       //   anchorOrigin: {
+//       //     horizontal: 'right',
+//       //     vertical: 'bottom'
+//       //   },
+//       //   variant: 'success'
+//       // })
+//       router.push("/")
+
+
+
+
+//       // await AsyncStorage.setItem("user_id", "");
+//       // await AsyncStorage.removeItem("user_email");
+//       // await AsyncStorage.removeItem("user_firstname");
+//       // await AsyncStorage.removeItem("user_lastname");
+//       // await AsyncStorage.removeItem("user_mappin");
+//       // await AsyncStorage.setItem("token","");
+//       // await AsyncStorage.removeItem("user_photo");
+//       // await AsyncStorage.removeItem("user_type_id");
+//       // await AsyncStorage.setItem("isSubscribed", "null")
+//       // await AsyncStorage.setItem("isTrial", "null")
+//       // await AsyncStorage.setItem("next_billing_time", "null")
+
+
+
+//       try {
+
+
+//       } catch (error: any) {
+//         // enqueueSnackbar(error?.response?.data?.message, {
+//         //   anchorOrigin: {
+//         //     horizontal: 'right',
+//         //     vertical: 'bottom'
+//         //   },
+//         //   variant: 'success'
+//         // })
+//       }
+//       // await AsyncStorage.setItem("schedule_subscription", "false")
+
+
+//       // await instance.post("/users/signout", { user_id })
+
+//       // dispatch({ type: "SIGN_OUT" });
+//       // navigation.navigate("Login");
+//     } catch (error: any) {
+//       // enqueueSnackbar(error?.response?.data?.message, {
+//       //   anchorOrigin: {
+//       //     horizontal: 'right',
+//       //     vertical: 'bottom'
+//       //   },
+//       //   variant: 'success'
+//       // })
+//     }
+//   };
+// };
 
 const updateUserData: actionFunctionType = (dispatch) => {
   return async ({ id, router, onSignIn = false, pathName, tourData = null, setNotificationData }) => {
@@ -1696,44 +1874,64 @@ const updateUserProfile: actionFunctionType = (dispatch) => {
 
 
 
-
-
-
-
-
-
-
-
-
 const setSignInStatus: actionFunctionType = (dispatch) => {
-  return async ({ setLoading }) => {
-
+  return async ({ setLoading, router }) => {
     try {
+      let token = await AsyncStorage.getItem("token");
+      let user_id = await AsyncStorage.getItem("user_id");
+      let userdata = await instance.post(
+        "/api/getsingleuser",
+        { user_id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
-      //  let token = await AsyncStorage.getItem("token")
-
-      // let userid = await AsyncStorage.getItem("user_id")
-
-      // let userdata = await instance.post("/users/getsingleuser", { id: userid }, { headers: { Authorization: `Bearer ${token}` } })
-
-      // if (userdata.data.user.isLoggedIn) {
-
-
-      //   // dispatch({ type: "USER_DATA", payload: userdata.data.user })
-      //   // dispatch({ type: "SIGNIN_STATUS" })
-      // } else {
-      //   // dispatch({ type: "LOADING_STATUS", payload: false })
-      // }
-      setLoading(false)
-    } catch (error) {
-
-      // dispatch({ type: "LOADING_STATUS", payload: false })
-      setLoading(false)
-      console.log(error + "");
+      if (userdata.data?.result?.isLoggedIn) {
+        dispatch({ type: "USER_DATA", payload: userdata.data.result });
+        dispatch({ type: "SIGNIN_STATUS", payload: {} });
+        router.push("/(session)/home")
+      } else {
+        dispatch({ type: "LOADING_STATUS", payload: false });
+        router.push("/(no-session)/signin")
+      }
+      setLoading(false);
+    } catch (error: any) {
+      dispatch({ type: "LOADING_STATUS", payload: false });
+      setLoading(false);
+      console.log(error?.response?.data + "ererrrrr");
     }
+  };
+};
 
-  }
-}
+
+// const setSignInStatus: actionFunctionType = (dispatch) => {
+//   return async ({ setLoading }) => {
+
+//     try {
+
+//       //  let token = await AsyncStorage.getItem("token")
+
+//       // let userid = await AsyncStorage.getItem("user_id")
+
+//       // let userdata = await instance.post("/users/getsingleuser", { id: userid }, { headers: { Authorization: `Bearer ${token}` } })
+
+//       // if (userdata.data.user.isLoggedIn) {
+
+
+//       //   // dispatch({ type: "USER_DATA", payload: userdata.data.user })
+//       //   // dispatch({ type: "SIGNIN_STATUS" })
+//       // } else {
+//       //   // dispatch({ type: "LOADING_STATUS", payload: false })
+//       // }
+//       setLoading(false)
+//     } catch (error) {
+
+//       // dispatch({ type: "LOADING_STATUS", payload: false })
+//       setLoading(false)
+//       console.log(error + "");
+//     }
+
+//   }
+// }
 const setLoadingStatus: actionFunctionType = (dispatch) => {
   return async ({ status }) => {
 

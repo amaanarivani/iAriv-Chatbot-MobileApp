@@ -1,16 +1,20 @@
 import { FlatList, Image, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
 import { usePathname, useRouter } from 'expo-router'
 import ChatCard from '@/components/ChatCard'
 import { AntDesign, Feather, FontAwesome6, Ionicons } from '@expo/vector-icons'
 import Header from '@/components/Header'
+import { contextType } from '@/contextApi/CreateDataContext'
+import { Context } from '@/contextApi/AuthContext'
 
 const home = () => {
     const [chatOpen, setChatOpen] = useState(true);
     // const [chatData, setChatData] = useState([]);
     const pathName = usePathname();
     const router = useRouter();
+
+    const { boundActions: { updateUserActivity }, state } = useContext<contextType>(Context);
 
     // console.log(pathName, "home pathname");
 
@@ -89,6 +93,12 @@ const home = () => {
             status: "connect"
         },
     ];
+
+    useEffect(() => {
+        console.log(state?.userData, "--> userData");
+
+    }, [state?.userData])
+
 
     const handlePress = (item: any) => {
         console.log('Item pressed:', item);

@@ -1,9 +1,27 @@
 import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '@/components/Header';
 import { useRouter } from 'expo-router';
+import { contextType } from '@/contextApi/CreateDataContext';
+import { Context } from '@/contextApi/AuthContext';
 
 const userProfile = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [about, setAbout] = useState("");
+
+  const { boundActions: { signOut, updateUserActivity }, state } = useContext<contextType>(Context);
+
+  useEffect(() => {
+    setName(state?.userData?.name);
+    setEmail(state?.userData?.email);
+    setGender(state?.userData?.gender);
+    setAddress(state?.userData?.address);
+    setAbout(state?.userData?.about);
+  }, [])
+
 
   const router = useRouter();
   return (
@@ -11,7 +29,7 @@ const userProfile = () => {
       <Header title="Personal Info" />
       <View style={{ width: "90%", backgroundColor: "#D1D1F0", padding: 6, marginHorizontal: "auto", marginTop: 10, borderTopLeftRadius: 20, borderTopRightRadius: 20 }}></View>
       <ScrollView style={{ backgroundColor: "white", height: "100%", borderTopLeftRadius: 20, borderTopRightRadius: 20 }}>
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 20 }}>
           <View>
             <Image
               source={require("@/assets/images/sample_user.png")}
@@ -25,10 +43,10 @@ const userProfile = () => {
                 style={styles.input}
                 placeholder="John Brown"
                 placeholderTextColor="#767676"
-              // value={name}
-              // onChangeText={(e) => {
-              //     setName(e)
-              // }}
+                value={name}
+                onChangeText={(e) => {
+                  setName(e)
+                }}
               />
             </View>
             <View style={{ width: "100%", marginTop: 15 }}>
@@ -37,13 +55,14 @@ const userProfile = () => {
                 style={styles.input}
                 placeholder="name@example.com"
                 placeholderTextColor="#767676"
-              // value={name}
+                value={email}
+                editable={false}
               // onChangeText={(e) => {
               //     setName(e)
               // }}
               />
             </View>
-            <View style={{ width: "100%", marginTop: 15 }}>
+            {/* <View style={{ width: "100%", marginTop: 15 }}>
               <Text style={{ fontSize: 15, marginStart: 4, fontWeight: "500" }}>Phone</Text>
               <TextInput
                 style={styles.input}
@@ -54,26 +73,14 @@ const userProfile = () => {
               //     setName(e)
               // }}
               />
-            </View>
+            </View> */}
             <View style={{ width: "100%", marginTop: 15 }}>
               <Text style={{ fontSize: 15, marginStart: 4, fontWeight: "500" }}>Gender</Text>
               <TextInput
                 style={styles.input}
                 placeholder="Male"
                 placeholderTextColor="#767676"
-              // value={name}
-              // onChangeText={(e) => {
-              //     setName(e)
-              // }}
-              />
-            </View>
-            <View style={{ width: "100%", marginTop: 15 }}>
-              <Text style={{ fontSize: 15, marginStart: 4, fontWeight: "500" }}>Date of birth</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="01/01/2001"
-                placeholderTextColor="#767676"
-              // value={name}
+                value={gender}
               // onChangeText={(e) => {
               //     setName(e)
               // }}
@@ -85,14 +92,28 @@ const userProfile = () => {
                 style={styles.input}
                 placeholder="Fort Mill, USA"
                 placeholderTextColor="#767676"
-              // value={name}
-              // onChangeText={(e) => {
-              //     setName(e)
-              // }}
+                value={address}
+                onChangeText={(e) => {
+                  setAddress(e)
+                }}
+              />
+            </View>
+            <View style={{ width: "100%", marginTop: 15 }}>
+              <Text style={{ fontSize: 15, marginStart: 4, fontWeight: "500" }}>About</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Something about yourself"
+                placeholderTextColor="#767676"
+                value={about}
+                onChangeText={(e) => {
+                  setAbout(e)
+                }}
               />
             </View>
             <View style={{ marginTop: 15 }}>
-              <Pressable style={{ backgroundColor: "#6969D7", padding: 20, borderRadius: 15 }} onPress={() => router.push("/(session)/home")}>
+              <Pressable style={{ backgroundColor: "#6969D7", padding: 20, borderRadius: 15 }}
+              // onPress={() => router.push("/(session)/home")}
+              >
                 <Text style={{ color: "white", textAlign: "center", fontSize: 17 }}>Save</Text>
               </Pressable>
             </View>
